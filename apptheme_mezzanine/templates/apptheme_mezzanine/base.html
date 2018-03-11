@@ -1,0 +1,80 @@
+{% extends "fwtheme_django/layout.html" %}
+
+{% load pages_tags mezzanine_tags i18n staticfiles cookielaw_tags %}{# ceda_utils #}
+
+{% block head_title %}{% if settings.SITE_TITLE %} | {{ settings.SITE_TITLE }}{% endif %}{% endblock %}
+
+{% block blog_feeds %}
+{% ifinstalled mezzanine.blog %}
+<link rel="alternate" type="application/rss+xml" title="RSS" href="{% url "blog_post_feed" "rss" %}">
+<link rel="alternate" type="application/atom+xml" title="Atom" href="{% url "blog_post_feed" "atom" %}">
+{% endifinstalled %}
+{% endblock %}
+
+
+{% block stylesheets_pre_extra %}
+<link rel="stylesheet" href="{% static "css/mezzanine.css" %}">
+{% endblock %}
+
+{% block site_name %}{{ settings.SITE_TITLE }}{% endblock site_name %}
+
+{% block navigation %}
+    {% page_menu "pages/menus/dropdown.html" %}
+    {% search_form %}
+    {% block userstatus %}
+        {# currently disabled #}   
+    {% endblock userstatus %}
+{% endblock navigation %}
+
+{% block content_main %}
+
+    {% block content_header %}
+
+    {% block breadcrumb_wrapper %}
+
+    <div class="row">
+        <div class="col-md-12">
+        <ul class="breadcrumb">
+        {% spaceless %}
+        {% block breadcrumb_menu %}{% page_menu "pages/menus/breadcrumb.html" %}{% endblock %}
+        {% endspaceless %}
+        </ul>
+        </div>
+    </div>
+    {% endblock breadcrumb_wrapper %}
+
+    {% endblock %}
+
+
+
+    {% block notifications %}{% endblock %}
+
+    {% block left_wrapper %}
+    {% endblock %}
+
+    {% block mid_wrapper %}
+        <div class="row">
+            <div class="col-md-12">
+                {% block content %}
+                    {% block main %}
+                    {% endblock %}
+                {% endblock %}
+            </div>
+        </div>
+    {% endblock %}
+
+    {% block right_wrapper %}
+    	{% block right_panel %}
+    	{% endblock %}
+    {% endblock %}
+
+{% endblock %}
+
+{% block footer_js %}
+{{ block.super }}
+{% include "includes/footer_scripts.html" %}
+{% endblock %}
+
+</div>
+</body>
+</html>
