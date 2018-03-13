@@ -14,6 +14,7 @@
 
 {% block stylesheets_pre_extra %}
     {# normally css/mezzanine.css" goes here, but we've re-implemented #}
+    <link rel="stylesheet" href="{% static "apptheme_mezzanine/css/custom.css" %}">
 {% endblock %}
 
 {% block site_name %}{{ settings.SITE_TITLE }}{% endblock site_name %}

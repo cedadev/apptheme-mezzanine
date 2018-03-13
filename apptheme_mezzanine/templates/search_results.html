@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "apptheme_mezzanine/base.html" %}
 
 {% load i18n mezzanine_tags %}
 
@@ -9,10 +9,10 @@
 {% endblock %}
 
 {% block breadcrumb_menu %}
-<li>
+<li class="breadcrumb-item">
     <a href="{% url "home" %}">{% trans "Home" %}</a>
 </li>
-<li class="active">{% trans "Search Results" %}</li>
+<li class="breadcrumb-item active">{% trans "Search Results" %}</li>
 {% endblock %}
 
 {% block main %}
