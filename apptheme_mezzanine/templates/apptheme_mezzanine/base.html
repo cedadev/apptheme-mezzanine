@@ -13,7 +13,7 @@
 
 
 {% block stylesheets_pre_extra %}
-<link rel="stylesheet" href="{% static "css/mezzanine.css" %}">
+    {# normally css/mezzanine.css" goes here, but we've re-implemented #}
 {% endblock %}
 
 {% block site_name %}{{ settings.SITE_TITLE }}{% endblock site_name %}
@@ -32,15 +32,13 @@
 
     {% block breadcrumb_wrapper %}
 
-    <div class="row">
-        <div class="col-md-12">
-        <ul class="breadcrumb">
+
+        <ol class="breadcrumb">
         {% spaceless %}
         {% block breadcrumb_menu %}{% page_menu "pages/menus/breadcrumb.html" %}{% endblock %}
         {% endspaceless %}
-        </ul>
-        </div>
-    </div>
+        </ol>
+        
     {% endblock breadcrumb_wrapper %}
 
     {% endblock %}
