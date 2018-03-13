@@ -25,7 +25,7 @@
                 class="nav-link dropdown-toggle" data-toggle="dropdown"
                 {% else %} class="nav-link" {% endif %}>
                     {{ page.title }}
-                    {% if page.has_children_in_menu %}<b class="caret"></b>{% endif %}
+                    {% if page.has_children_in_menu %}<span class="caret"></span>{% endif %}
                 </a>
                 {% if page.has_children_in_menu %}{% page_menu page %}{% endif %}
             </li>
