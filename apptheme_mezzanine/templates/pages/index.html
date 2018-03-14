@@ -134,6 +134,7 @@
             
         {% endblock %}
 
+        {% block slides %}
         {% if homepage.slides.all.count > 0 %}
         <div class="card-deck">
             {% with homepage.slides.all as slides %}
@@ -152,9 +153,11 @@
             {% endwith %}
         </div>
         {% endif %}
+        {% endblock slides %}
 
         <hr/>
 
+        {% block icon_boxes %}
 		{% if homepage.boxes.all.count > 0 %}
             <div class="card-deck">
                 {% for box in homepage.boxes.all %}
@@ -173,7 +176,8 @@
                     </div>
                 {% endfor %}
             </div>
-		{% endif %}
+        {% endif %}
+        {% endblock icon_boxes %}
 
         <hr/>
 
