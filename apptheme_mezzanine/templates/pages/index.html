@@ -1,0 +1,209 @@
+{% extends "apptheme_mezzanine/base.html" %}
+{% load mezzanine_tags static blog_tags keyword_tags pages_tags columns %}
+
+{# The following extra blocks can be uncommetented for use if needed #}
+{# block head_js_extra #}
+{# {{ block.super }} #}
+{# endblock #}
+
+{# block stylesheets_extra #}
+{# {{ block.super } #}
+{# endblock #}
+
+{% block head_extra %}
+<style>
+.ticker {
+  width: 90%;
+  margin: 2px auto;
+}
+.ticker .alert-link {
+    text-decoration: none;
+}
+ /* The HTML list gets replaced with a single div,
+    which contains the active ticker item, so you
+    can easily style that as well */
+.ticker div {
+  display: inline-block;
+  word-wrap: break-word;
+}
+.carousel-caption {
+    text-shadow: 2px 2px 4px #000000;
+}
+.carousel-static
+{
+    position: absolute;
+    text-align: center;
+    top: 10px;
+    width: 96.66666666666666%;
+    color: #ffffff;
+    text-shadow: 2px 2px 4px #000000;
+}
+.carousel-credit {
+    position:absolute;
+    bottom:0;
+    right:150px;
+    text-align: right;
+    margin-top: 0px;
+    padding-top: 0px;
+    padding-bottom: 5px;
+    margin-bottom: 0px;
+}
+</style>
+{% endblock %}
+
+{% block title %}
+{% editable page.title %}{{ page.title }}{% endeditable %}
+{% endblock %}
+
+{% block title_wrapper %}
+{% endblock %}
+
+{% block breadcrumb_wrapper %}
+{% endblock %}
+
+{% block page_special %}
+{% endblock %}
+
+{# Override content_header to omit it #}
+{% block content_header %}
+{% endblock %}
+
+{% block content_wrapper %}
+
+    {% block main %}
+    
+        <div class="jumbotron">
+            <h1 class="display-4">{{settings.SITE_TITLE}}</h1>
+            <p class="lead">{{settings.SITE_TAGLINE}}</p>
+            <hr class="my-4">
+            <p>{{homepage.leader_text}}</p>
+            <p class="lead">
+            <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+            </p>
+        </div>
+
+        {% block notifications %}
+        {% if messages %}
+            <div class="col-md-6 col-md-offset-3">
+                {% for message in messages %}
+                    {% if 'success' in message.tags %}
+                        <div class="alert alert-with-icon alert-success" role="alert">
+                            <i class="fa fa-check-circle"></i> <span>{{ message }}</span>
+                        </div>
+                    {% elif 'error' in message.tags %}
+                        <div class="alert alert-with-icon alert-danger" role="alert">
+                            <i class="fa fa-exclamation-circle"></i> <span>{{ message }}</span>
+                        </div>
+                    {% elif 'warning' in message.tags %}
+                        <div class="alert alert-with-icon alert-warning" role="alert">
+                            <i class="fa fa-exclamation-triangle"></i> <span>{{ message }}</span>
+                        </div>
+                    {% else %}
+                        <div class="alert alert-with-icon alert-info" role="alert">
+                            <i class="fa fa-info-circle"></i> <span>{{ message }}</span>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% endblock %}
+
+        {% block blog_recent_posts %}
+            {% blog_recent_posts 3 as recent_posts %}
+            {% if recent_posts %}
+                <div class="alert alert-success alert-dismissable" data-alert="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-1">
+                                <a href="{% url 'blog_post_list' %}" class="btn btn-default btn-xs">News</a>
+                            </div>
+                            <div class="ticker">
+                                <ul>
+                                {% for recent_post in recent_posts %}
+                                    <li>
+                                        <a href="{{ recent_post.get_absolute_url }}" class="alert-link">{{ recent_post.title }}</a>
+                                    </li>
+                                {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+            
+        {% endblock %}
+
+        {% if homepage.slides.all.count > 0 %}
+        <div class="card-deck">
+            {% with homepage.slides.all as slides %}
+                {% for slide in slides %}
+                    <div class="card text-center" style="width: 18rem;">
+                        <img class="card-img-top" src="{% if slide.image %}{{MEDIA_URL}}{{slide.image}}{% else %}https://placehold.it/286x180{% endif%}" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ slide.heading }}</h5>
+                            <p class="card-text">{{slide.subheading}}</p>
+                            {% if slide.button_link %}
+                                <a href="{{ slide.button_link }}" class="btn btn-primary">{% if slide.button_text %}{{ slide.button_text }}{% else %}Learn more{% endif %}</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endwith %}
+        </div>
+        {% endif %}
+
+        <hr/>
+
+		{% if homepage.boxes.all.count > 0 %}
+            <div class="card-deck">
+                {% for box in homepage.boxes.all %}
+                    <div class="card text-center" style="width: 18rem;">
+                        <div class="card-header">
+                            <span class="fa-stack fa-5x">
+                                <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                                <i class="fa {% if box.icon %}{{box.icon}}{% else %}fa-info{% endif %} fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </div>
+                        <div class="card-body">
+                            <h4 class="card-title"><a class="inherit-color" href="{{ box.link }}">{{ box.title }}</a></h4>
+                    <p class="card-text">{{box.content | safe}}</p>
+                    <a href="{{ box.link }}" class="btn btn-default">Learn More</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+		{% endif %}
+
+        <hr/>
+
+	{% endblock %}
+
+{% endblock %}
+
+{% block footer_js %}
+{{ block.super }}
+<!-- Script to Activate the Carousel -->
+<script>
+    $('.carousel').carousel({
+        interval: 5000 //changes the speed
+    })
+</script>
+<script src="{% static 'jquery-ticker/jquery.ticker.min.js' %}"></script>
+<script>
+            $('.ticker').ticker(
+                $.fn.ticker.defaults = {
+                    random:        false, // Whether to display ticker items in a random order
+                    itemSpeed:     3000,  // The pause on each ticker item before being replaced
+                    cursorSpeed:   30,    // Speed at which the characters are typed
+                    pauseOnHover:  true,  // Whether to pause when the mouse hovers over the ticker
+                    finishOnHover: true,  // Whether or not to complete the ticker item instantly when moused over
+                    cursorOne:     '',   // The symbol for the first part of the cursor
+                    cursorTwo:     '',   // The symbol for the second part of the cursor
+                    fade:          true,  // Whether to fade between ticker items or not
+                    fadeInSpeed:   50,   // Speed of the fade-in animation
+                    fadeOutSpeed:  50    // Speed of the fade-out animation
+                }
+            );
+</script>
+{% endblock %}
