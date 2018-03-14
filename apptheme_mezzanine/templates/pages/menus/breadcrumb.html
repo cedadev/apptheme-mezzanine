@@ -5,7 +5,8 @@
 {% else %}
 {% for page in page_branch %}
 
-    {% if not has_home and page.is_primary and forloop.first %}
+    {# minor customisation of mezzanine default theme: always include home #}
+    {% if page.is_primary and forloop.first %}
     <li class="breadcrumb-item" id="breadcrumb-menu-home">
         <a href="{% url "home" %}">{% trans "Home" %}</a>
     </li>
