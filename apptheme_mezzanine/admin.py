@@ -6,7 +6,7 @@ from mezzanine.pages.admin import PageAdmin
 
 from copy import deepcopy
 
-from models import (Portfolio, PortfolioItem, PortfolioItemImage,
+from apptheme_mezzanine.models import (Portfolio, PortfolioItem, PortfolioItemImage,
                     Person,PortfolioItemPerson,
                     PortfolioItemCategory, IconBox, HomePage, Slide)
 from django.forms import TextInput, Textarea
