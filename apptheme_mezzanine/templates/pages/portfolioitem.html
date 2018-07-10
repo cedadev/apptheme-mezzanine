@@ -30,13 +30,13 @@
     <div class="col-md-4">
         {% if portfolioitem.icon %}
             <span class="fa-stack fa-3x pull-right">
-                <i class="fa fa-circle fa-stack-2x text-primary"></i>
-                <i class="fa {{portfolioitem.icon}} fa-stack-1x fa-inverse"></i>
+                <i class="fas fa-circle fa-stack-2x text-primary"></i>
+                <i class="fas {{portfolioitem.icon}} fa-stack-1x fa-inverse"></i>
             </span>
         {% else %}
             <span class="fa-stack fa-3x pull-right">
-                <i class="fa fa-circle fa-stack-2x text-primary"></i>
-                <i class="fa fa-info fa-stack-1x fa-inverse"></i>
+                <i class="fas fa-circle fa-stack-2x text-primary"></i>
+                <i class="fas fa-info fa-stack-1x fa-inverse"></i>
             </span>
         {% endif %}
     </div>
@@ -67,13 +67,13 @@
                                     <span class="fa-stack fa-2x">
                                         
                                         {% if person.image %}
-                                            <i class="fa fa-stack-2x text-primary"></i>
+                                            <i class="fas fa-stack-2x text-primary"></i>
                                             <div class="thumbnail">
                                                 <img src="{{ MEDIA_URL }}{% thumbnail person.image 255 255 %}">
                                             </div>
                                         {% else %}
-                                            <i class="fa fa-circle fa-stack-2x text-primary"></i>
-                                            <i class="fa fa-user fa-stack-1x fa-inverse"></i>
+                                            <i class="fas fa-circle fa-stack-2x text-primary"></i>
+                                            <i class="fas fa-user fa-stack-1x fa-inverse"></i>
                                         {% endif %}
                                     </span> 
                                 </div>
@@ -94,13 +94,13 @@
                                     <div class="media media-left">
                                         <span class="fa-stack fa-2x">
                                             {% if person.image %}
-                                                <i class="fa fa-stack-2x text-primary"></i>
+                                                <i class="fas fa-stack-2x text-primary"></i>
                                                 <div class="thumbnail">
                                                     <img src="{{ MEDIA_URL }}{% thumbnail person.image 255 255 %}">
                                                 </div>
                                             {% else %}
-                                                <i class="fa fa-circle fa-stack-2x text-primary"></i>
-                                                <i class="fa fa-user fa-stack-1x fa-inverse"></i>
+                                                <i class="fas fa-circle fa-stack-2x text-primary"></i>
+                                                <i class="fas fa-user fa-stack-1x fa-inverse"></i>
                                             {% endif %}
                                         </span>
                                         {{person.bio|safe}}
