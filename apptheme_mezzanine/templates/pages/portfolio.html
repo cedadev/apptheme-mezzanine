@@ -15,9 +15,12 @@
 <br/>
 
 
-{% for col in items|columns:2 %}
+{% for col in items|columns:3 %}
 <div class="card-deck">
         {% for item in col %}
+
+        <div class="col-4">
+
             <div class="card text-center">
                 <div class="card-header">    
                         {% if item.icon %}
@@ -39,7 +42,9 @@
                     <a href="{{ item.get_absolute_url }}" class="btn btn-default">Learn More</a>
                 </div>
             </div>
-        
+
+        </div>
+
         {% endfor %}
 </div>
 <br>
