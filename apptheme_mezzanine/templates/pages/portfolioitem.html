@@ -5,29 +5,30 @@
 {% block main %}
 <!-- Portfolio Item Row (image or logo, intro, icon) -->
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-4">
         
         {% if portfolioitem.notLogos %}
             {% for image in portfolioitem.notLogos %}
                 {% if forloop.first %}
 
-                    <img src="{{ MEDIA_URL }}{{ image.file }}" class="img-responsive">
+                    <img src="{{ MEDIA_URL }}{% thumbnail image.file 300 0 %}" class="img-fluid">
+                    
 
                 {% endif %}
             {% endfor %}
         {% elif portfolioitem.logo %}
-                    <img src="{{ MEDIA_URL }}{{ portfolioitem.logo.file }}" class="img-responsive">
+                    <img src="{{ MEDIA_URL }}{% thumbnail portfolioitem.logo.file 100 0 %}" class="img-fluid">
         {% else %}
                     <img src="http://placehold.it/300x200">
         {% endif %}
 
     </div>
 
-    <div class="col-md-4">
+    <div class="col-4">
             {% if portfolioitem.intro %}{{ portfolioitem.intro|safe }}{% endif %}
     </div>
 
-    <div class="col-md-4">
+    <div class="col-4 text-right">
         {% if portfolioitem.icon %}
             <span class="fa-stack fa-3x pull-right">
                 <i class="fas fa-circle fa-stack-2x text-primary"></i>
@@ -58,66 +59,75 @@
 {% with portfolioitem.persons.all as items %}
     <div id="row">
             <!-- Person List -->
-            {% for col in items|columns:3 %}
-                {% for item in col %}
+            {% for item in items %}
                     {% with item.person as person %}
-                    <div class="col-md-4 service-item">
-                            <a class="inherit-color" href="#" data-toggle="modal" data-target="#modal-person-{{person.id}}">
-                                <div class="media media-left">
-                                    <span class="fa-stack fa-2x">
-                                        
-                                        {% if person.image %}
-                                            <i class="fas fa-stack-2x text-primary"></i>
-                                            <div class="thumbnail">
-                                                <img src="{{ MEDIA_URL }}{% thumbnail person.image 255 255 %}">
-                                            </div>
-                                        {% else %}
-                                            <i class="fas fa-circle fa-stack-2x text-primary"></i>
-                                            <i class="fas fa-user fa-stack-1x fa-inverse"></i>
-                                        {% endif %}
-                                    </span> 
-                                </div>
+                    <div class="col-xs-1 col-md-4 person-item">
+                        <a class="inherit-color" href="#" data-toggle="modal" data-target="#modal-person-{{person.id}}">
+                            <div class="media">
+                                <span class="fa-stack fa-3x">
+                                    
+                                    {% if person.image %}
+                                        <i class="fa fa-stack-2x text-primary"></i>
+                                        <div class="thumbnail">
+                                            <img class=" align-self-start" src="{{ MEDIA_URL }}{% thumbnail person.image 90 90 %}">
+                                        </div>
+                                    {% else %}
+                                        <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                                        <i class="fa fa-user fa-stack-1x fa-inverse"></i>
+                                    {% endif %}
+                                </span> 
                                 <div class="media-body">
-                                    <h4 class="media-heading">{% if person.title %}{{ person.title }} {% endif %}{{person.first_name}} {{person.last_name}}</h4>
-                                    <p>{{person.job_title}}</p>
-                                    
-                                </div>
-                            </a>
-                        <div class="modal fade" id="modal-person-{{person.id}}" tabindex="-1" role="dialog">
-                        <div class="modal-dialog modal-lg" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                    <h4 class="modal-title" id="myModalLabel">{% if person.title %}{{ person.title }} {% endif %}{{person.first_name}} {{person.last_name}}</h4>{% if person.job_title %}<h5>{{ person.job_title }}</h5>{% endif %}
-                                </div>
-                                <div class="modal-body">
-                                    <div class="media media-left">
-                                        <span class="fa-stack fa-2x">
-                                            {% if person.image %}
-                                                <i class="fas fa-stack-2x text-primary"></i>
-                                                <div class="thumbnail">
-                                                    <img src="{{ MEDIA_URL }}{% thumbnail person.image 255 255 %}">
-                                                </div>
-                                            {% else %}
-                                                <i class="fas fa-circle fa-stack-2x text-primary"></i>
-                                                <i class="fas fa-user fa-stack-1x fa-inverse"></i>
-                                            {% endif %}
-                                        </span>
-                                        {{person.bio|safe}}
-                                    </div>
-                                    
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    <h5>{% if person.title %}{{ person.title }} {% endif %}{{person.first_name}} {{person.last_name}}</h5>
+                                    <p class="small">{{person.job_title}}</p>
                                 </div>
                             </div>
-                        </div>
+
+                            </a>
+                        <!-- Modal -->
+                        <div class="modal fade" id="modal-person-{{person.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">{% if person.title %}{{ person.title }} {% endif %}{{person.first_name}} {{person.last_name}}<br><span class="small">{{person.job_title}}</span></h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        </div>
+                                        <div class="modal-body">
+                                                <div class="media">
+                                                        <span class="fa-stack fa-3x">
+                                                            
+                                                            {% if person.image %}
+                                                                <i class="fa fa-stack-2x text-primary"></i>
+                                                                <div class="thumbnail">
+                                                                    <img class=" align-self-start" src="{{ MEDIA_URL }}{% thumbnail person.image 90 90 %}">
+                                                                </div>
+                                                            {% else %}
+                                                                <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                                                                <i class="fa fa-user fa-stack-1x fa-inverse"></i>
+                                                            {% endif %}
+                                                        </span> 
+                                                        <div class="media-body">
+                                                                {% if person.bio %}
+                                                                    {{person.bio|safe}}
+                                                                {% else %}
+                                                                    <p>This person has not provided further details.</p>
+                                                                {% endif %}
+                                                            </div>
+                                                    </div>
+
+                                            
+                                        </div>
+                                        <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    </div>
+                            </div>
+                            </div>
                         </div>
 
                     </div>
                 {% endwith %}
                 {% endfor %}
-            {% endfor %}
     </div>
 {% endwith %}
 {% endif %}
