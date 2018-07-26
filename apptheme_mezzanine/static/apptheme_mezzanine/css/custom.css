@@ -232,3 +232,38 @@ float the buttons inside it. This prevents collapsing. */
 .gallery .thumbnail > img {
   width: 100%;
 }
+
+/*=======================================
+ for additional models / features added by this theme
+=========================================*/
+body {
+  padding-top: 140px;
+}
+.carousel-caption {
+  text-shadow: 2px 2px 4px #000000;
+}
+/* Make the carousel controls not visible, and only appear on hover */
+.carousel .carousel-control { visibility: hidden; display: none;}
+.carousel:hover .carousel-control { visibility: visible; display: inline-block;}
+
+
+/* formatting for service and project items */
+.service-item, .project-item, .person-item {
+  /* space out vertically */
+  padding-top: 10px;
+  padding-bottom: 20px;
+}
+.service-item a, .project-item a, .person-item a {
+  /* make hyperlinks within a service or project item inherit properties rather than applying colour & underline */
+  color: inherit;
+  text-decoration: inherit;
+}
+.media-body {
+  margin: 10px;
+}
+/* thumbnail class for images */
+.thumbnail {
+  border: 0px;
+  padding: 0px;
+  border-radius: 0px;
+}
