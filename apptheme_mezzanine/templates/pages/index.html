@@ -26,28 +26,6 @@
   display: inline-block;
   word-wrap: break-word;
 }
-.carousel-caption {
-    text-shadow: 2px 2px 4px #000000;
-}
-.carousel-static
-{
-    position: absolute;
-    text-align: center;
-    top: 10px;
-    width: 96.66666666666666%;
-    color: #ffffff;
-    text-shadow: 2px 2px 4px #000000;
-}
-.carousel-credit {
-    position:absolute;
-    bottom:0;
-    right:150px;
-    text-align: right;
-    margin-top: 0px;
-    padding-top: 0px;
-    padding-bottom: 5px;
-    margin-bottom: 0px;
-}
 </style>
 {% endblock %}
 
@@ -72,15 +50,25 @@
 
     {% block main %}
     
-        <div class="jumbotron">
-            <h1 class="display-4">{{settings.SITE_TITLE}}</h1>
-            <p class="lead">{{settings.SITE_TAGLINE}}</p>
-            <hr class="my-4">
-            <p>{{homepage.leader_text}}</p>
-            <p class="lead">
-            <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
-            </p>
-        </div>
+        {% if homepage.leader_text %}
+            <div class="jumbotron">
+                <h1 class="display-4">{{settings.SITE_TITLE}}</h1>
+                <p class="lead">{{settings.SITE_TAGLINE}}</p>
+                <hr class="my-4">
+                <p>{{homepage.leader_text}}</p>
+                    {% if homepage.button_link %}
+                    <p class="lead">
+                        <a class="btn btn-primary btn-lg" href="{{ homepage.button_link }}" role="button">
+                            {% if homepage.button_text %}
+                                {{ homepage.button_text }}
+                            {% else %}
+                                Learn more
+                            {% endif %}
+                        </a>
+                    </p>
+                    {% endif %}
+            </div>
+        {% endif %}
 
         {% block notifications %}
         {% if messages %}
@@ -131,26 +119,50 @@
                     </div>
                 </div>
             {% endif %}
-            
         {% endblock %}
 
         {% block slides %}
         {% if homepage.slides.all.count > 0 %}
-        <div class="card-deck">
-            {% with homepage.slides.all as slides %}
-                {% for slide in slides %}
-                    <div class="card text-center" style="width: 18rem;">
-                        <img class="card-img-top" src="{% if slide.image %}{{MEDIA_URL}}{{slide.image}}{% else %}https://placehold.it/286x180{% endif%}" alt="Card image cap">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ slide.heading }}</h5>
-                            <p class="card-text">{{slide.subheading}}</p>
-                            {% if slide.button_link %}
-                                <a href="{{ slide.button_link }}" class="btn btn-primary">{% if slide.button_text %}{{ slide.button_text }}{% else %}Learn more{% endif %}</a>
-                            {% endif %}
+        <div id="carouselHome" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+                {% with homepage.slides.all as slides %}
+                    {% for slide in slides %}
+                        <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                            <img class="d-block w-100" src="{% if slide.image %}{{MEDIA_URL}}{{slide.image}}{% else %}https://placehold.it/800x400{% endif%}" alt="slide">
+                            <div class="carousel-caption d-none d-md-block">
+                                {% if slide.heading %}
+                                    <h5>{{ slide.heading }}</h5>
+                                {% endif %}
+                                {% if slide.subheading %}
+                                    <p>{{ slide.subheading }}</p>
+                                {% endif %}
+                                {% if slide.button_link %}
+                                    <a href="{{ slide.button_link }}" class="btn btn-primary" style="text-shadow: none;">
+                                        {% if slide.button_text %}
+                                            {{ slide.button_text }}
+                                        {% else %}
+                                            Learn more
+                                        {% endif %}
+                                    </a>
+                                {% endif %}
+                                {% if slide.credit %}
+                                    <div class="carousel-credit">
+                                        <p class="small float-right">image credit: {{ slide.credit }}</p>
+                                    </div>
+                                {% endif %}
+                            </div>
                         </div>
-                    </div>
-                {% endfor %}
-            {% endwith %}
+                    {% endfor %}
+                {% endwith %}
+            </div>
+            <a class="carousel-control-prev" href="#carouselHome" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselHome" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+            </a>
         </div>
         {% endif %}
         {% endblock slides %}
@@ -171,7 +183,7 @@
                         <div class="card-body">
                             <h4 class="card-title"><a class="inherit-color" href="{{ box.link }}">{{ box.title }}</a></h4>
                     <p class="card-text">{{box.content | safe}}</p>
-                    <a href="{{ box.link }}" class="btn btn-default">Learn More</a>
+                    <a href="{{ box.link }}" class="btn btn-primary">Learn More</a>
                         </div>
                     </div>
                 {% endfor %}
