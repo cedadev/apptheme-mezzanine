@@ -6,27 +6,12 @@
 {# {{ block.super }} #}
 {# endblock #}
 
-{# block stylesheets_extra #}
-{# {{ block.super } #}
-{# endblock #}
+{% block stylesheets_extra %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'jquery-ticker/css/style.css' %}">
+{% endblock %}
 
 {% block head_extra %}
-<style>
-.ticker {
-  width: 90%;
-  margin: 2px auto;
-}
-.ticker .alert-link {
-    text-decoration: none;
-}
- /* The HTML list gets replaced with a single div,
-    which contains the active ticker item, so you
-    can easily style that as well */
-.ticker div {
-  display: inline-block;
-  word-wrap: break-word;
-}
-</style>
 {% endblock %}
 
 {% block title %}
@@ -97,26 +82,23 @@
         {% endblock %}
 
         {% block blog_recent_posts %}
-            {% blog_recent_posts 3 as recent_posts %}
+            {% blog_recent_posts 5 as recent_posts %}
             {% if recent_posts %}
-                <div class="alert alert-success alert-dismissable" data-alert="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-sm-1">
-                                <a href="{% url 'blog_post_list' %}" class="btn btn-default btn-xs">News</a>
-                            </div>
-                            <div class="ticker">
-                                <ul>
-                                {% for recent_post in recent_posts %}
-                                    <li>
-                                        <a href="{{ recent_post.get_absolute_url }}" class="alert-link">{{ recent_post.title }}</a>
-                                    </li>
-                                {% endfor %}
-                                </ul>
-                            </div>
-                        </div>
+                <div class="alert alert-warning alert-dismissable fade show" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                    </button>
+                    <div class="ticker">
+                        <a href="/news">News</a>&nbsp;&nbsp;
+                        <ul>
+                        {% for recent_post in recent_posts %}
+                            <li>
+                                <a href="{{ recent_post.get_absolute_url }}">{{ recent_post.title }}</a>
+                            </li>
+                        {% endfor %}
+                        </ul>
                     </div>
+
                 </div>
             {% endif %}
         {% endblock %}
@@ -197,29 +179,24 @@
 
 {% endblock %}
 
-{% block footer_js %}
-{{ block.super }}
-<!-- Script to Activate the Carousel -->
-<script>
-    $('.carousel').carousel({
-        interval: 5000 //changes the speed
-    })
-</script>
-<script src="{% static 'jquery-ticker/jquery.ticker.min.js' %}"></script>
-<script>
-            $('.ticker').ticker(
-                $.fn.ticker.defaults = {
-                    random:        false, // Whether to display ticker items in a random order
-                    itemSpeed:     3000,  // The pause on each ticker item before being replaced
-                    cursorSpeed:   30,    // Speed at which the characters are typed
-                    pauseOnHover:  true,  // Whether to pause when the mouse hovers over the ticker
-                    finishOnHover: true,  // Whether or not to complete the ticker item instantly when moused over
-                    cursorOne:     '',   // The symbol for the first part of the cursor
-                    cursorTwo:     '',   // The symbol for the second part of the cursor
-                    fade:          true,  // Whether to fade between ticker items or not
-                    fadeInSpeed:   50,   // Speed of the fade-in animation
-                    fadeOutSpeed:  50    // Speed of the fade-out animation
-                }
-            );
-</script>
-{% endblock %}
+{% block tail_js_extra %}
+    <script type="text/javascript" src="{% static 'jquery-ticker/js/jquery.ticker.min.js' %}"></script>
+    <script type="text/javascript" >
+        /* ticker settings */
+        $.fn.ticker.defaults = {
+            random:        false, // Whether to display ticker items in a random order
+            itemSpeed:     3000,  // The pause on each ticker item before being replaced
+            cursorSpeed:   5,    // Speed at which the characters are typed
+            pauseOnHover:  true,  // Whether to pause when the mouse hovers over the ticker
+            finishOnHover: true,  // Whether or not to complete the ticker item instantly when moused over
+            cursorOne:     '',   // The symbol for the first part of the cursor
+            cursorTwo:     '',   // The symbol for the second part of the cursor
+            fade:          true,  // Whether to fade between ticker items or not
+            fadeInSpeed:   300,   // Speed of the fade-in animation
+            fadeOutSpeed:  150    // Speed of the fade-out animation
+        };
+
+        /* call the ticker */
+        $('.ticker').ticker();
+    </script>
+{% endblock tail_js_extra %}
