@@ -89,7 +89,7 @@
                             <span aria-hidden="true">&times;</span>
                     </button>
                     <div class="ticker">
-                        <a href="/news">News</a>&nbsp;&nbsp;
+                        <a href="{% url 'blog_post_list' %}">News</a>&nbsp;&nbsp;
                         <ul>
                         {% for recent_post in recent_posts %}
                             <li>
