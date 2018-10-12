@@ -8,7 +8,7 @@
 
 {% block stylesheets_extra %}
     {{ block.super }}
-    <link rel="stylesheet" href="{% static 'jquery-ticker/css/style.css' %}">
+    {# <link rel="stylesheet" href="{% static 'tickermepink/assets/css/styles.css' %}"> #}
 {% endblock %}
 
 {% block head_extra %}
@@ -88,12 +88,12 @@
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                     </button>
-                    <div class="ticker">
+                    <div>
                         <a href="{% url 'blog_post_list' %}">News</a>&nbsp;&nbsp;
-                        <ul>
+                        <ul id="ticker">
                         {% for recent_post in recent_posts %}
                             <li>
-                                <a href="{{ recent_post.get_absolute_url }}">{{ recent_post.title }}</a>
+                                <a href="{{ recent_post.get_absolute_url }}">{{ recent_post.title }}(t)</a>
                             </li>
                         {% endfor %}
                         </ul>
@@ -180,23 +180,10 @@
 {% endblock %}
 
 {% block tail_js_extra %}
-    <script type="text/javascript" src="{% static 'jquery-ticker/js/jquery.ticker.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'tickermepink/assets/js/tickerme.js' %}"></script>
     <script type="text/javascript" >
-        /* ticker settings */
-        $.fn.ticker.defaults = {
-            random:        false, // Whether to display ticker items in a random order
-            itemSpeed:     3000,  // The pause on each ticker item before being replaced
-            cursorSpeed:   5,    // Speed at which the characters are typed
-            pauseOnHover:  true,  // Whether to pause when the mouse hovers over the ticker
-            finishOnHover: true,  // Whether or not to complete the ticker item instantly when moused over
-            cursorOne:     '',   // The symbol for the first part of the cursor
-            cursorTwo:     '',   // The symbol for the second part of the cursor
-            fade:          true,  // Whether to fade between ticker items or not
-            fadeInSpeed:   300,   // Speed of the fade-in animation
-            fadeOutSpeed:  150    // Speed of the fade-out animation
-        };
-
-        /* call the ticker */
-        $('.ticker').ticker();
+        $(function(){
+            $('#ticker').tickerme();
+        });
     </script>
 {% endblock tail_js_extra %}
