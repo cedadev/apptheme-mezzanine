@@ -84,22 +84,29 @@
         {% block blog_recent_posts %}
             {% blog_recent_posts 5 as recent_posts %}
             {% if recent_posts %}
-                <div class="alert alert-warning alert-dismissable fade show" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                    </button>
-                    <div>
-                        <a href="{% url 'blog_post_list' %}">News</a>&nbsp;&nbsp;
-                        <ul id="ticker">
-                        {% for recent_post in recent_posts %}
-                            <li>
-                                <a href="{{ recent_post.get_absolute_url }}">{{ recent_post.title }}(t)</a>
-                            </li>
-                        {% endfor %}
-                        </ul>
-                    </div>
 
+            <div class="alert alert-warning alert-dismissable fade show" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                </button>
+                <a href="{% url 'blog_post_list' %}"  style="text-decoration: none">JASMIN News</a>
+                <div id="wrapper">
+                    <ul id="ticker">
+                    {% for recent_post in recent_posts %}
+                        <li>
+                            {% if recent_post.featured_image %}
+                                <img  class="align-top" src="{{ MEDIA_URL }}{% thumbnail recent_post.featured_image 30 30 %}">&nbsp;
+                            {% else %}
+                                <i class="fas fa-info-circle fa-2x align-top"></i>&nbsp;
+                            {% endif %}
+                            <a href="{{ recent_post.get_absolute_url }}">{{ recent_post.title }}(t)</a>
+                        </li>
+                    {% endfor %}
+                    </ul>
                 </div>
+            </div>
+
+                
             {% endif %}
         {% endblock %}
 
