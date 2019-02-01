@@ -13,9 +13,6 @@ class Portfolio(Page):
     A collection of individual portfolio items
     '''
 
-    content = RichTextField(blank=True,
-        help_text="Brief introduction to Portfolio")
-
     class Meta:
         verbose_name = _("Portfolio")
         verbose_name_plural = _("Portfolios")
@@ -43,6 +40,12 @@ class PortfolioItem(Page, RichText):
     button_text = models.CharField(max_length=100, blank=True,
         help_text="Optional, if present the default 'Learn More' text"
         " on the button will be replaced with the text provided")
+
+    # custom save method to enforce NOT appearing in page menus
+    def save(self, *args, **kwargs):
+        self.in_menus=[u'']
+        super(PortfolioItem, self).save(*args, **kwargs)
+
 
     class Meta:
         verbose_name = _("Portfolio item")
