@@ -14,7 +14,10 @@
 
 {% block stylesheets_pre_extra %}
     {# normally css/mezzanine.css" goes here, but we've re-implemented #}
+    {# customisations of bootstrap for apptheme_mezzanine #}
     <link rel="stylesheet" href="{% static "apptheme_mezzanine/css/custom.css" %}">
+    {# (optional) further customisations specific to org #}
+    <link rel="stylesheet" href="{% static "apptheme_mezzanine/css/org-custom.css" %}">
 {% endblock %}
 
 {% block site_name %}{{ settings.SITE_TITLE }}{% endblock site_name %}
