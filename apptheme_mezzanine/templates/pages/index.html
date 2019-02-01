@@ -27,164 +27,170 @@
 {% block page_special %}
 {% endblock %}
 
-{# Override content_header to omit it #}
-{% block content_header %}
-{% endblock %}
+{% block page_container %}
+    {# overriding page_container and omitting div class=container here to span full width #}
 
-{% block content_wrapper %}
+    {# Override content_header to omit it #}
+    {% block content_header %}
+    {% endblock %}
 
-    {% block main %}
-    
-        {% if homepage.leader_text %}
-            <div class="jumbotron">
-                <h1 class="display-4">{{settings.SITE_TITLE}}</h1>
-                <p class="lead">{{settings.SITE_TAGLINE}}</p>
-                <hr class="my-4">
-                <p>{{homepage.leader_text}}</p>
-                    {% if homepage.button_link %}
-                    <p class="lead">
-                        <a class="btn btn-primary btn-lg" href="{{ homepage.button_link }}" role="button">
-                            {% if homepage.button_text %}
-                                {{ homepage.button_text }}
-                            {% else %}
-                                Learn more
-                            {% endif %}
-                        </a>
-                    </p>
-                    {% endif %}
-            </div>
-        {% endif %}
 
-        {% block notifications %}
-        {% if messages %}
-            <div class="col-md-6 col-md-offset-3">
-                {% for message in messages %}
-                    {% if 'success' in message.tags %}
-                        <div class="alert alert-with-icon alert-success" role="alert">
-                            <i class="fas fa-check-circle"></i> <span>{{ message }}</span>
-                        </div>
-                    {% elif 'error' in message.tags %}
-                        <div class="alert alert-with-icon alert-danger" role="alert">
-                            <i class="fas fa-exclamation-circle"></i> <span>{{ message }}</span>
-                        </div>
-                    {% elif 'warning' in message.tags %}
-                        <div class="alert alert-with-icon alert-warning" role="alert">
-                            <i class="fas fa-exclamation-triangle"></i> <span>{{ message }}</span>
-                        </div>
-                    {% else %}
-                        <div class="alert alert-with-icon alert-info" role="alert">
-                            <i class="fas fa-info-circle"></i> <span>{{ message }}</span>
-                        </div>
-                    {% endif %}
-                {% endfor %}
-            </div>
-        {% endif %}
-        {% endblock %}
+    {% block content_wrapper %}
 
-        {% block blog_recent_posts %}
-            {% blog_recent_posts 5 as recent_posts %}
-            {% if recent_posts %}
-
-            <div class="alert alert-warning alert-dismissable fade show" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                </button>
-                <a href="{% url 'blog_post_list' %}"  style="text-decoration: none">News</a>
-                <div id="wrapper">
-                    <ul id="ticker">
-                    {% for recent_post in recent_posts %}
-                        <li>
-                            {% if recent_post.featured_image %}
-                                <img  class="align-top" src="{{ MEDIA_URL }}{% thumbnail recent_post.featured_image 30 30 %}">&nbsp;
-                            {% else %}
-                                <i class="fas fa-info-circle fa-2x align-top"></i>&nbsp;
-                            {% endif %}
-                            <a href="{{ recent_post.get_absolute_url }}">{{ recent_post.title }}</a>
-                        </li>
-                    {% endfor %}
-                    </ul>
+        {% block main %}
+        
+            {% if homepage.leader_text %}
+                <div class="jumbotron">
+                    <h1 class="display-4">{{settings.SITE_TITLE}}</h1>
+                    <p class="lead">{{settings.SITE_TAGLINE}}</p>
+                    <hr class="my-4">
+                    <p>{{homepage.leader_text}}</p>
+                        {% if homepage.button_link %}
+                        <p class="lead">
+                            <a class="btn btn-primary btn-lg" href="{{ homepage.button_link }}" role="button">
+                                {% if homepage.button_text %}
+                                    {{ homepage.button_text }}
+                                {% else %}
+                                    Learn more
+                                {% endif %}
+                            </a>
+                        </p>
+                        {% endif %}
                 </div>
-            </div>
-
-                
             {% endif %}
-        {% endblock %}
 
-        {% block slides %}
-        {% if homepage.slides.all.count > 0 %}
-        <div id="carouselHome" class="carousel slide" data-ride="carousel">
-            <div class="carousel-inner">
-                {% with homepage.slides.all as slides %}
-                    {% for slide in slides %}
-                        <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                            <img class="d-block w-100" src="{% if slide.image %}{{MEDIA_URL}}{{slide.image}}{% else %}https://placehold.it/800x400{% endif%}" alt="slide">
-                            <div class="carousel-caption d-none d-md-block">
-                                {% if slide.heading %}
-                                    <h5>{{ slide.heading }}</h5>
+            {% block notifications %}
+            {% if messages %}
+                <div class="col-md-6 col-md-offset-3">
+                    {% for message in messages %}
+                        {% if 'success' in message.tags %}
+                            <div class="alert alert-with-icon alert-success" role="alert">
+                                <i class="fas fa-check-circle"></i> <span>{{ message }}</span>
+                            </div>
+                        {% elif 'error' in message.tags %}
+                            <div class="alert alert-with-icon alert-danger" role="alert">
+                                <i class="fas fa-exclamation-circle"></i> <span>{{ message }}</span>
+                            </div>
+                        {% elif 'warning' in message.tags %}
+                            <div class="alert alert-with-icon alert-warning" role="alert">
+                                <i class="fas fa-exclamation-triangle"></i> <span>{{ message }}</span>
+                            </div>
+                        {% else %}
+                            <div class="alert alert-with-icon alert-info" role="alert">
+                                <i class="fas fa-info-circle"></i> <span>{{ message }}</span>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            {% endif %}
+            {% endblock %}
+
+            {% block blog_recent_posts %}
+                {% blog_recent_posts 5 as recent_posts %}
+                {% if recent_posts %}
+
+                <div class="alert alert-warning alert-dismissable fade show" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                    </button>
+                    <a href="{% url 'blog_post_list' %}"  style="text-decoration: none">News</a>
+                    <div id="wrapper">
+                        <ul id="ticker">
+                        {% for recent_post in recent_posts %}
+                            <li>
+                                {% if recent_post.featured_image %}
+                                    <img  class="align-top" src="{{ MEDIA_URL }}{% thumbnail recent_post.featured_image 30 30 %}">&nbsp;
+                                {% else %}
+                                    <i class="fas fa-info-circle fa-2x align-top"></i>&nbsp;
                                 {% endif %}
-                                {% if slide.subheading %}
-                                    <p>{{ slide.subheading }}</p>
-                                {% endif %}
-                                {% if slide.button_link %}
-                                    <a href="{{ slide.button_link }}" class="btn btn-primary" style="text-shadow: none;">
-                                        {% if slide.button_text %}
-                                            {{ slide.button_text }}
-                                        {% else %}
-                                            Learn more
-                                        {% endif %}
-                                    </a>
-                                {% endif %}
-                                {% if slide.credit %}
-                                    <div class="carousel-credit">
-                                        <p class="small float-right">image credit: {{ slide.credit }}</p>
-                                    </div>
-                                {% endif %}
+                                <a href="{{ recent_post.get_absolute_url }}">{{ recent_post.title }}</a>
+                            </li>
+                        {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+
+                    
+                {% endif %}
+            {% endblock %}
+
+            {% block slides %}
+            {% if homepage.slides.all.count > 0 %}
+            <div id="carouselHome" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner">
+                    {% with homepage.slides.all as slides %}
+                        {% for slide in slides %}
+                            <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                                <img class="d-block w-100" src="{% if slide.image %}{{MEDIA_URL}}{{slide.image}}{% else %}https://placehold.it/800x400{% endif%}" alt="slide">
+                                <div class="carousel-caption d-none d-md-block">
+                                    {% if slide.heading %}
+                                        <h5>{{ slide.heading }}</h5>
+                                    {% endif %}
+                                    {% if slide.subheading %}
+                                        <p>{{ slide.subheading }}</p>
+                                    {% endif %}
+                                    {% if slide.button_link %}
+                                        <a href="{{ slide.button_link }}" class="btn btn-primary" style="text-shadow: none;">
+                                            {% if slide.button_text %}
+                                                {{ slide.button_text }}
+                                            {% else %}
+                                                Learn more
+                                            {% endif %}
+                                        </a>
+                                    {% endif %}
+                                    {% if slide.credit %}
+                                        <div class="carousel-credit">
+                                            <p class="small float-right">image credit: {{ slide.credit }}</p>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% endwith %}
+                </div>
+                <a class="carousel-control-prev" href="#carouselHome" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselHome" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+                </a>
+            </div>
+            {% endif %}
+            {% endblock slides %}
+
+            <hr/>
+
+            {% block icon_boxes %}
+            {% if homepage.boxes.all.count > 0 %}
+                <div class="card-deck justify-content-center">
+                    {% for box in homepage.boxes.all %}
+                        <div class="card text-center mt-4" style="min-width: 18rem; max-width: 18rem;">
+                            <div class="card-header">
+                                <span class="fa-stack fa-5x">
+                                    <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                                    <i class="fa {% if box.icon %}{{box.icon}}{% else %}fa-info{% endif %} fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </div>
+                            <div class="card-body">
+                                <h4 class="card-title"><a class="inherit-color" href="{{ box.link }}">{{ box.title }}</a></h4>
+                        <p class="card-text">{{box.content | safe}}</p>
+                        <a href="{{ box.link }}" class="btn btn-primary">Learn More</a>
                             </div>
                         </div>
                     {% endfor %}
-                {% endwith %}
-            </div>
-            <a class="carousel-control-prev" href="#carouselHome" role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-            </a>
-            <a class="carousel-control-next" href="#carouselHome" role="button" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-            </a>
-        </div>
-        {% endif %}
-        {% endblock slides %}
+                </div>
+            {% endif %}
+            {% endblock icon_boxes %}
 
-        <hr/>
+            <hr/>
 
-        {% block icon_boxes %}
-		{% if homepage.boxes.all.count > 0 %}
-            <div class="card-deck">
-                {% for box in homepage.boxes.all %}
-                    <div class="card text-center mt-4" style="min-width: 18rem; max-width: 18rem;">
-                        <div class="card-header">
-                            <span class="fa-stack fa-5x">
-                                <i class="fa fa-circle fa-stack-2x text-primary"></i>
-                                <i class="fa {% if box.icon %}{{box.icon}}{% else %}fa-info{% endif %} fa-stack-1x fa-inverse"></i>
-                            </span>
-                        </div>
-                        <div class="card-body">
-                            <h4 class="card-title"><a class="inherit-color" href="{{ box.link }}">{{ box.title }}</a></h4>
-                    <p class="card-text">{{box.content | safe}}</p>
-                    <a href="{{ box.link }}" class="btn btn-primary">Learn More</a>
-                        </div>
-                    </div>
-                {% endfor %}
-            </div>
-        {% endif %}
-        {% endblock icon_boxes %}
+        {% endblock %}
 
-        <hr/>
+    {% endblock %}
 
-	{% endblock %}
-
-{% endblock %}
+{% endblock page_container %}
 
 {% block tail_js_extra %}
     <script type="text/javascript" src="{% static 'tickermepink/assets/js/tickerme.js' %}"></script>
