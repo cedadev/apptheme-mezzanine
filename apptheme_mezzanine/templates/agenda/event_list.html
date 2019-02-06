@@ -33,7 +33,7 @@
           <div class="row">
             <div class="col-lg-8 col-md-7 col-sm-6">
               {% block page_title %}
-                <h1>Events</h1>
+                <h1>{{page.title}}</h1>
               {% endblock %}
             </div>
           </div>
@@ -87,72 +87,85 @@
                             Subscribe to all events in Google Calendar/Outlook/iCal
                         </a></p>
                         {% endblock %}
-            
-                            
-                        
-                            {% for event in events.object_list %}
-                                <a href="{{ event.get_absolute_url }}" class="list-group-item list-group-item-action">
-                                    {% block event_list_event_title %}
-                                        
-                                        {% editable event.title %}
-                                        <h4 class="list-group-item-heading">
-                                            {{ event.title }}
-                                        </h4>
-                                        {% endeditable %}
-                                        
-                                    {% endblock %}
-                            
-                                    {% block event_list_event_metainfo %}
-                                    {% editable event.start event.end event.location %}
-                                    <p class="list-group-item-text">
-                                        {{ event.start }}
-                                        {% if event.end %}
-                                        {% trans "-" %} {{ event.end }}
-                                        {% endif %}
-                                        {% if event.location %}
-                                        {% trans "at" %}
-                                        <a href="{% url "event_list_location" event.location.slug %}">{{ event.location }}</a>
-                                        {% endif %}
-                                    </p>
-                                    {% endeditable %}
-                                    {% endblock %}
-                        
-                                    {% if settings.EVENT_USE_FEATURED_IMAGE and event.featured_image %}
-                                    {% block event_list_event_featured_image %}
-                                    <a href="{{ event.get_absolute_url }}">
-                                        <img class="img-thumbnail pull-left" src="{{ MEDIA_URL }}{% thumbnail event.featured_image 90 90 %}">
-                                    </a>
-                                    {% endblock %}
-                                    {% endif %}
-                        
-                                    {% block event_list_event_content %}
-                                    {% editable event.content %}
-                                    {{ event.description_from_content|safe }}
-                                    {% endeditable %}
-                                    {% endblock %}
-                        
-                                    {% block event_list_event_links %}
-                                    
-                                        {% keywords_for event as tags %}
-                                        {% if tags %}
-                                        <ul class="list-inline tags">
-                                        {% trans "Tags" %}:
-                                        {% spaceless %}
-                                        {% for tag in tags %}
-                                        <li><a href="{% url "event_list_tag" tag.slug %}" class="tag">{{ tag }}</a></li>
-                                        {% endfor %}
-                                        {% endspaceless %}
-                                        </ul>
-                                        {% endif %}
-                                        <p>
-                                        <a href="{{ event.get_absolute_url }}">{% trans "read more" %}</a>
-                                        
-                                        </p>
-                                    
-                                    {% endblock %}
-                                    </a>
-                                {% endfor %}
 
+                            <div>
+                            {% for event in events.object_list %}
+                            
+                            <div class="card mb-3" >
+                                <div class="card-header">
+                                    {% block event_list_event_title %}
+                                    {% editable event.title event.start %}
+                                    <div class="row">
+                                        <div class="col-8 text-left">
+                                            <h5 class="card-title">{{event.title}}</h5>
+                                        </div>
+                                        <div class="col-4 text-right">
+                                            <h6 class="card-subtitle mb-2 text-muted">
+                                                    {{ event.start |date:"SHORT_DATE_FORMAT" }}
+                                            </h6>
+                                        </div>
+                                    </div>
+                                    {% endeditable %}
+                                    {% endblock %}
+                                </div>
+                            
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-8 text-left">
+                                            {% block event_list_event_content %}
+                                            {% editable event.content %}
+                                            {{ event.description_from_content|safe }}
+                                            {% endeditable %}
+                                            {% endblock %}
+                                        </div>
+                                        <div class="col-4 text-right">
+                                            {% if event.featured_image %}
+                                            {% block event_list_event_featured_image %}
+                                            <a href="{{ event.get_absolute_url }}">
+                                            <img class="img-thumbnail float-right" src="{{ MEDIA_URL }}{% thumbnail event.featured_image 90 90 %}">
+                                            </a>
+                                            {% endblock %}
+                                            {% endif %}
+
+                                            {% block event_list_event_metainfo %}
+                                            {% editable event.location %}
+                                            <p class="card-text">
+                                                {% if event.location %}
+                                                {% trans "at" %}
+                                                <a href="{% url "event_list_location" event.location.slug %}">{{ event.location }}</a>
+                                                {% endif %}
+                                            </p>
+                                            {% endeditable %}
+                                            {% endblock event_list_event_metainfo %}
+                                        </div>
+                                    </div>
+
+
+
+
+
+
+                                    {% block event_list_event_links %}
+                                
+                                    <a href="{{ event.get_absolute_url }}" class="btn btn-primary btn-large">Read more</a>
+
+                                    {% keywords_for event as tags %}
+                                    {% if tags %}
+                                    &nbsp;{% trans "Tags" %}:
+                                    {% spaceless %}
+                                    {% for tag in tags %}
+                                    <a href="{% url "event_list_tag" tag.slug %}"><span class="badge badge-secondary">{{ tag }}</span></a>
+                                    {% endfor %}
+                                    {% endspaceless %}
+                                    
+                                    {% endif %}
+                                
+                                {% endblock %}
+                                </div>
+                                        
+                                </div>
+                                {% endfor %}
+                                </div>
             
                         {% pagination_for events %}
             
