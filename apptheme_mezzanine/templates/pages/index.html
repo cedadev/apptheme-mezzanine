@@ -9,6 +9,12 @@
 {% block stylesheets_extra %}
     {{ block.super }}
     {# <link rel="stylesheet" href="{% static 'tickermepink/assets/css/styles.css' %}"> #}
+    <style>
+        /* reduce body padding for this page to avoid whitespace above slider */
+        body {
+            padding-top: 90px;
+        }
+    </style>
 {% endblock %}
 
 {% block head_extra %}

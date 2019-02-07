@@ -1,0 +1,185 @@
+{% extends "apptheme_mezzanine/base.html" %}
+{% load i18n mezzanine_tags event_tags keyword_tags %}
+
+{% block meta_title %}{% if page %}{{ page.richtextpage.meta_title }}{% else %}{% trans "Events" %}{% endif %}{% endblock %}
+
+{% block meta_keywords %}{% metablock %}
+{% keywords_for page as keywords %}
+{% for keyword in keywords %}
+    {% if not forloop.first %}, {% endif %}
+    {{ keyword }}
+{% endfor %}
+{% endmetablock %}{% endblock %}
+
+{% block meta_description %}{% metablock %}
+{{ page.description }}
+{% endmetablock %}{% endblock %}
+
+{% block title %}
+{% if page %}
+{% editable page.title %}{{ page.title }}{% endeditable %}
+{% else %}
+{% trans "Events" %}
+{% endif %}
+{% endblock %}
+
+
+{% block page_container %}
+<div class="container">
+        {% block content_main %}
+        {% block content_header %}
+  
+        <div class="page-header" id="banner">
+          <div class="row">
+            <div class="col-lg-8 col-md-7 col-sm-6">
+              {% block page_title %}
+                <h1>{{page.title}}</h1>
+              {% endblock %}
+            </div>
+          </div>
+        </div>
+  
+        {% endblock content_header %}
+  
+        {% block content_panel %}
+            <div class="row">
+                
+                {% block mid_wrapper %}
+                    <div class="col-md-8">
+                        
+                        {% block main %}
+                        
+                        {% if tag or location or year or month or author %}
+                            {% block event_list_filterinfo %}
+                            <p>
+                            {% if tag %}
+                                {% trans "Viewing events tagged" %} {{ tag }}
+                            {% else %}{% if location %}
+                                {% trans "Viewing events for the location" %} {{ location }}
+                            {% else %}{% if year or month %}
+                                {% trans "Viewing events from" %} {% if month %}{{ month }}, {% endif %}
+                                {{ year }}
+                            {% else %}{% if author %}
+                                {% trans "Viewing events by" %}
+                                {{ author.get_full_name|default:author.username }}
+                            {% endif %}{% endif %}{% endif %}{% endif %}
+                            {% endblock %}
+                            </p>
+                        {% else %}
+                            {% if page %}
+                            {% block event_list_pagecontent %}
+                            {% editable page.richtextpage.content %}
+                            {{ page.richtextpage.content|richtext_filters|safe }}
+                            {% endeditable %}
+                            {% endblock %}
+                            {% endif %}
+
+                            {% if events.object_list.count == 0 %}
+                            <p>No events selected. Use the filters on the right hand side to show other events.</p>
+                            {% endif %}
+
+                        {% endif %}
+
+
+
+                        {% block event_calendar %}
+                        <p><a href='{% icalendar_url %}' target="_blank" class="btn btn-default">
+                            Subscribe to all events in Google Calendar/Outlook/iCal
+                        </a></p>
+                        {% endblock %}
+
+                            <div>
+                            {% for event in events.object_list %}
+                            
+                            <div class="card mb-3" >
+                                <div class="card-header">
+                                    {% block event_list_event_title %}
+                                    {% editable event.title event.start %}
+                                    <div class="row">
+                                        <div class="col-8 text-left">
+                                            <h5 class="card-title">{{event.title}}</h5>
+                                        </div>
+                                        <div class="col-4 text-right">
+                                            <h6 class="card-subtitle mb-2 text-muted">
+                                                    {{ event.start |date:"SHORT_DATE_FORMAT" }}
+                                            </h6>
+                                        </div>
+                                    </div>
+                                    {% endeditable %}
+                                    {% endblock %}
+                                </div>
+                            
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-8 text-left">
+                                            {% block event_list_event_content %}
+                                            {% editable event.content %}
+                                            {{ event.description_from_content|safe }}
+                                            {% endeditable %}
+                                            {% endblock %}
+                                        </div>
+                                        <div class="col-4 text-right">
+                                            {% if event.featured_image %}
+                                            {% block event_list_event_featured_image %}
+                                            <a href="{{ event.get_absolute_url }}">
+                                            <img class="img-thumbnail float-right" src="{{ MEDIA_URL }}{% thumbnail event.featured_image 90 90 %}">
+                                            </a>
+                                            {% endblock %}
+                                            {% endif %}
+
+                                            {% block event_list_event_metainfo %}
+                                            {% editable event.location %}
+                                            <p class="card-text">
+                                                {% if event.location %}
+                                                {% trans "at" %}
+                                                <a href="{% url "event_list_location" event.location.slug %}">{{ event.location }}</a>
+                                                {% endif %}
+                                            </p>
+                                            {% endeditable %}
+                                            {% endblock event_list_event_metainfo %}
+                                        </div>
+                                    </div>
+
+
+
+
+
+
+                                    {% block event_list_event_links %}
+                                
+                                    <a href="{{ event.get_absolute_url }}" class="btn btn-primary btn-large">Read more</a>
+
+                                    {% keywords_for event as tags %}
+                                    {% if tags %}
+                                    &nbsp;{% trans "Tags" %}:
+                                    {% spaceless %}
+                                    {% for tag in tags %}
+                                    <a href="{% url "event_list_tag" tag.slug %}"><span class="badge badge-secondary">{{ tag }}</span></a>
+                                    {% endfor %}
+                                    {% endspaceless %}
+                                    
+                                    {% endif %}
+                                
+                                {% endblock %}
+                                </div>
+                                        
+                                </div>
+                                {% endfor %}
+                                </div>
+            
+                        {% pagination_for events %}
+            
+                    {% endblock main %}
+                    </div>
+                {% endblock mid_wrapper %}
+
+                {% block right_wrapper %}
+                    <div class="col-md-4">
+                        {% include "agenda/includes/filter_panel.html" %}
+                    </div>
+                {% endblock right_wrapper %}
+            </div>
+        {% endblock content_panel %}
+    {% endblock content_main %}
+</div>
+{% endblock page_container %}

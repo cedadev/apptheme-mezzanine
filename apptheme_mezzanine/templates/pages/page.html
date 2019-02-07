@@ -15,8 +15,8 @@
 {{ page.description }}
 {% endmetablock %}{% endblock %}
 
-{% block title %}
-{% editable page.title %}title: {{ page.title }}{% endeditable %}
+{% block page_title %}
+{{ block.super }}
 {% endblock %}
 
 {% block main %}
