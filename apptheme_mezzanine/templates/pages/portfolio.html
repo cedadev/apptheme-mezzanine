@@ -4,10 +4,10 @@
 
 {% block main %}
 
-    {% if page.portfolio.content %}
+    {% if page.portfolio.leader %}
         <div class="row">
             <div class="col-lg-12">
-                {{ page.portfolio.content | safe }}
+                {{ page.portfolio.leader | safe }}
             </div>
         </div>
     {% endif %}

@@ -13,8 +13,8 @@ class Portfolio(Page):
     A collection of individual portfolio items
     '''
 
-    content = RichTextField(blank=True,
-        help_text="Brief introduction to Portfolio")
+    leader = models.CharField(blank=True, max_length=4096,
+        help_text="Optional brief intro.")
 
     class Meta:
         verbose_name = _("Portfolio")
