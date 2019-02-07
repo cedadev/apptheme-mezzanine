@@ -104,10 +104,6 @@
                                             {% block blog_post_list_post_metainfo %}
                                             {% editable blog_post.publish_date %}
                                             <h6>
-                                                {% trans "Posted by" %}:
-                                                {% with blog_post.user as author %}
-                                                <a href="{% url "blog_post_list_author" author %}">{{ author.get_full_name|default:author.username }}</a>
-                                                {% endwith %}
                                                 {% with blog_post.categories.all as categories %}
                                                 {% if categories %}
                                                 {% trans "in" %}
@@ -128,22 +124,22 @@
                                             {% endblock %}
 
                                             {% block blog_post_list_post_links %}
-                                            <div class="blog-list-detail">
+
+                                                <a href="{{ blog_post.get_absolute_url }}" class="btn btn-primary btn-large">{% trans "read more" %}</a>
+
                                                 {% keywords_for blog_post as tags %}
                                                 {% if tags %}
-                                                <ul class="list-inline tags">
-                                                {% trans "Tags" %}:
+                                                &nbsp;{% trans "Tags" %}:
                                                 {% spaceless %}
                                                 {% for tag in tags %}
-                                                <li><a href="{% url "blog_post_list_tag" tag.slug %}" class="tag">{{ tag }}</a>{% if not forloop.last %}, {% endif %}</li>
+                                                <a href="{% url "blog_post_list_tag" tag.slug %}"><span class="badge badge-secondary">{{ tag }}</span></a>{% if not forloop.last %}&nbsp;{% endif %}
                                                 {% endfor %}
                                                 {% endspaceless %}
-                                                </ul>
                                                 {% endif %}
-                                                <p>
-                                                <a href="{{ blog_post.get_absolute_url }}" class="btn btn-primary btn-large">{% trans "read more" %}</a>
-                                                </p>
-                                            </div>
+                                                
+
+                                                
+
                                             {% endblock %}
                                         </div>
                                         <div class="col-4 text-right">

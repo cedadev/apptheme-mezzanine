@@ -154,7 +154,7 @@
                                     &nbsp;{% trans "Tags" %}:
                                     {% spaceless %}
                                     {% for tag in tags %}
-                                    <a href="{% url "event_list_tag" tag.slug %}"><span class="badge badge-secondary">{{ tag }}</span></a>
+                                    <a href="{% url "event_list_tag" tag.slug %}"><span class="badge badge-secondary">{{ tag }}</span></a>{% if not forloop.last %}&nbsp;{% endif %}
                                     {% endfor %}
                                     {% endspaceless %}
                                     
