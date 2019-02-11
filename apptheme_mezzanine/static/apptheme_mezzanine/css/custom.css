@@ -275,8 +275,12 @@ body {
 
 #wrapper {
 	margin: 2px auto;
-	/*width: 50%;*/
+  /*width: 50%;*/
 }
+
+.alert a {
+  color:inherit;
+ }
 
 #ticker_container {
 	font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
