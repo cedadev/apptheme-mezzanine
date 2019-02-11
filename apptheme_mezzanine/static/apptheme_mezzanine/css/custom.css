@@ -242,6 +242,11 @@ body {
 .carousel-caption {
   text-shadow: 2px 2px 4px #000000;
 }
+/* correct color of elements incorrectly over-ridden by bootstrap */
+/* all child elements of carousel-caption should inherit font color of theme */
+.carousel-caption > * {
+  color: inherit;
+}
 /* Make the carousel controls not visible, and only appear on hover */
 .carousel .carousel-control { visibility: hidden; display: none;}
 .carousel:hover .carousel-control { visibility: visible; display: inline-block;}
