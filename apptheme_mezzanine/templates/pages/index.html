@@ -105,7 +105,8 @@
                         {% for recent_post in recent_posts %}
                             <li>
                                 {% if recent_post.featured_image %}
-                                    <img  class="align-top" src="{{ MEDIA_URL }}{% thumbnail recent_post.featured_image 30 30 %}">&nbsp;
+                                    {# 0 32 means 32 height and proportional width #}
+                                    <img  class="align-top" src="{{ MEDIA_URL }}{% thumbnail recent_post.featured_image 0 32 %}">&nbsp;
                                 {% else %}
                                     <i class="fas fa-info-circle fa-2x align-top"></i>&nbsp;
                                 {% endif %}

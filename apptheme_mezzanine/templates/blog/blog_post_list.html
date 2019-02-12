@@ -119,7 +119,7 @@
 
                                             {% block blog_post_list_post_content %}
                                             {% editable blog_post.content %}
-                                            {{ blog_post.description_from_content|safe }}
+                                            {{ blog_post.description_from_content | safe | truncatewords_html:30 }}
                                             {% endeditable %}
                                             {% endblock %}
 
@@ -146,7 +146,7 @@
                                             {% if settings.BLOG_USE_FEATURED_IMAGE and blog_post.featured_image %}
                                             {% block blog_post_list_post_featured_image %}
                                             <a href="{{ blog_post.get_absolute_url }}">
-                                                <img class="img-thumbnail pull-left" src="{{ MEDIA_URL }}{% thumbnail blog_post.featured_image 90 90 %}">
+                                                <img class="img-thumbnail pull-left" src="{{ MEDIA_URL }}{% thumbnail blog_post.featured_image 200 0 %}">
                                             </a>
                                             {% endblock %}
                                             {% endif %}
