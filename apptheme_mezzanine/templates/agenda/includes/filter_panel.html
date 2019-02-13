@@ -1,4 +1,4 @@
-{% load event_tags keyword_tags i18n %}
+{% load event_tags keyword_tags mezzanine_tags i18n %}
 
 {% block upcoming_events %}
 {% upcoming_events 5 as upcoming_events %}
@@ -6,8 +6,17 @@
 <h3>{% trans "Upcoming Events" %}</h3>
 <ul class="list-unstyled upcoming-events">
 {% for upcoming_event in upcoming_events %}
-<li><a href="{{ upcoming_event.get_absolute_url }}"
-    >{{ upcoming_event.title }}</a></li>
+<li>
+    {% spaceless %}
+    <a href="{{ upcoming_event.get_absolute_url }}"
+    >
+        {% if settings.EVENTS_USE_FEATURED_IMAGE and recent_post.featured_image %}
+            <img src="{{ MEDIA_URL }}{% thumbnail upcoming_event.featured_image 36 0 %}">
+        {% endif %}
+        {{ upcoming_event.title }}
+    </a>
+    {% endspaceless %}
+</li>
 {% endfor %}
 </ul>
 {% endif %}
