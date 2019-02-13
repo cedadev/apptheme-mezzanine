@@ -1,12 +1,13 @@
 {% load i18n %}
 
 {% if current_page.has_previous or current_page.has_next %}
-<nav aria-label="Page navigation">
-    <span>{% trans "Page" %} {{ current_page.number }} {% trans "of" %} {{ current_page.paginator.num_pages }}</span>
-    <ul class="pagination">
+<nav aria-label="Page navigation" class="table-responsive">
+    <span class="small">{% trans "Page" %} {{ current_page.number }} {% trans "of" %} {{ current_page.paginator.num_pages }}</span>
+    <ul class="pagination flex-wrap">
+        <li class="page-item {% if not current_page.has_previous %} disabled{% endif %}"><a class="page-link" href="?{{ page_var }}=1{% if querystring %}&{{ querystring }}{% endif %}"><i class="fas fa-fast-backward"></i></a></li>
         <li class="page-item {% if not current_page.has_previous %} disabled{% endif %}">
         <a class="page-link" {% if current_page.has_previous %} href="?{{ page_var }}={{ current_page.previous_page_number }}{% if querystring %}&{{ querystring }}{% endif %}"{% endif %} aria-label="Previous">
-            <span aria-hidden="true">&laquo;</span>
+                <i class="fas fa-backward"></i>
         </a>
         </li>
         
@@ -16,9 +17,10 @@
 
         <li class="page-item {% if not current_page.has_next %} disabled{% endif %}">
         <a class="page-link" {% if current_page.has_next %} href="?{{ page_var }}={{ current_page.next_page_number }}{% if querystring %}&{{ querystring }}{% endif %}"{% endif %} aria-label="Next">
-            <span aria-hidden="true">&raquo;</span>
+                <i class="fas fa-forward"></i>
         </a>
         </li>
+        <li class="page-item {% if not current_page.has_next %} disabled{% endif %}"><a class="page-link" href="?{{ page_var }}={{ current_page.paginator.num_pages }}{% if querystring %}&{{ querystring }}{% endif %}"><i class="fas fa-fast-forward"></i></a></li>
     </ul>
 </nav>
 {% endif %}
