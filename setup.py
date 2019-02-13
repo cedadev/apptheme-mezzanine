@@ -41,6 +41,7 @@ if __name__ == "__main__":
         packages = find_packages(),
         include_package_data = True,
         zip_safe = False,
-        install_requires = ['mezzanine','django-columns'],
+        install_requires = ['mezzanine','django-columns', 'mezzanine-agenda'],
+        dependency_links=["https://github.com/mjpritchard/mezzanine-agenda.git"],
         #extras_require = { },
     )
