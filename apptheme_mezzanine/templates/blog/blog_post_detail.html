@@ -71,8 +71,8 @@
                     {% with blog_post.get_previous_by_publish_date as previous %}
                     {% if previous %}
                     <li class="page-item">
-                    <a class="page-link" href="{{ previous.get_absolute_url }}" aria-label="Previous">
-                         <span aria-hidden="true">&larr; {{ previous }}</span>
+                    <a class="page-link small" href="{{ previous.get_absolute_url }}" aria-label="Previous">
+                         <span aria-hidden="true"><i class="fas fa-backward"></i> {{ previous }}</span>
                     </a>
                     </li>
                     {% endif %}
@@ -81,8 +81,8 @@
                     {% with blog_post.get_next_by_publish_date as next %}
                     {% if next %}
                     <li class="page-item">
-                    <a class="page-link" href="{{ next.get_absolute_url }}" aria-label="Next">
-                         <span aria-hidden="true">{{ next }} &rarr;</span>
+                    <a class="page-link small" href="{{ next.get_absolute_url }}" aria-label="Next">
+                         <span aria-hidden="true">{{ next }} <i class="fas fa-forward"></i></span>
                     </a>
                     </li>
                     {% endif %}
