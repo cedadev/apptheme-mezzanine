@@ -38,7 +38,7 @@
      <div class="card-body">
           {% block blog_post_detail_featured_image %}
           {% if settings.BLOG_USE_FEATURED_IMAGE and blog_post.featured_image %}
-          <p><img class="img-fluid" src="{{ MEDIA_URL }}{% thumbnail blog_post.featured_image 250 0 %}"></p>
+          <p><img class="img-responsive img-thumbnail float-right" src="{{ MEDIA_URL }}{% thumbnail blog_post.featured_image 250 0 %}"></p>
           {% endif %}
           {% endblock %}
 

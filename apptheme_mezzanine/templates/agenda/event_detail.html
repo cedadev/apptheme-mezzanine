@@ -49,8 +49,8 @@
         {% endblock %}
 
         {% block event_detail_featured_image %}
-        {% if settings.EVENT_USE_FEATURED_IMAGE and event.featured_image %}
-        <p><img class="img-responsive" src="{{ MEDIA_URL }}{% thumbnail event.featured_image 600 0 %}"></p>
+        {% if event.featured_image %}
+        <p><img class="img-thumbnail float-right img-responsive" src="{{ MEDIA_URL }}{% thumbnail event.featured_image 250 0 %}"></p>
         {% endif %}
         {% endblock %}
 
