@@ -10,7 +10,7 @@
     {% spaceless %}
     <a href="{{ upcoming_event.get_absolute_url }}"
     >
-        {% if settings.EVENTS_USE_FEATURED_IMAGE and recent_post.featured_image %}
+        {% if upcoming_event.featured_image %}
             <img src="{{ MEDIA_URL }}{% thumbnail upcoming_event.featured_image 36 0 %}">
         {% endif %}
         {{ upcoming_event.title }}
