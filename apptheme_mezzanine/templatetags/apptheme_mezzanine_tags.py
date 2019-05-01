@@ -11,4 +11,8 @@ def portfolioitem_in_category(things, category):
 @stringfilter
 def de_b(value):
     ''' If string value is prefixed as a bytecode (b'somestring', remove the wrapping b'')'''
-    return str(value.encode('utf-8'))[2:-1]
+    print value
+    if value.startswith("b'"):
+        return str(value.encode('utf-8'))[2:-1]
+    else:
+        return value
