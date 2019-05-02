@@ -1,5 +1,5 @@
 {% extends "apptheme_mezzanine/base.html" %}
-{% load i18n mezzanine_tags blog_tags keyword_tags %}
+{% load i18n mezzanine_tags blog_tags keyword_tags apptheme_mezzanine_tags %}
 
 {% block meta_title %}{% if page %}{{ page.meta_title }}{% else %}{% trans "Blog" %}{% endif %}{% endblock %}
 
@@ -120,7 +120,7 @@
 
                                             {% block blog_post_list_post_content %}
                                             {% editable blog_post.content %}
-                                            {{ blog_post.description_from_content | safe | truncatewords_html:30 }}
+                                            {{ blog_post.description_from_content | de_b | safe | truncatewords_html:30 }}
                                             {% endeditable %}
                                             {% endblock %}
 
