@@ -98,7 +98,6 @@ class EventsRSS(Feed):
         limit = settings.EVENT_RSS_LIMIT
         if limit is not None:
             events = events[:settings.EVENT_RSS_LIMIT]
-        print events
         return events
 
     def item_description(self, item):
