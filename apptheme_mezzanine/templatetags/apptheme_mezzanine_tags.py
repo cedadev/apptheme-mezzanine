@@ -22,9 +22,7 @@ def datemod(value):
     '''manually truncate timezone (last 6 chars) off a string time value,
      then parse as datetime & return it'''
     datestr = value[:-6]
-    print "datestr", datestr
     newdate = datetime.strptime(datestr,'%a, %d %b %Y %H:%M:%S')
-    print "newdate: ", newdate
     return newdate
 
 @register.filter(expects_localtime=True)
