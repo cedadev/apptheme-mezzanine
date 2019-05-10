@@ -5,9 +5,10 @@
 {% block main %}
 <!-- Portfolio Item Row (image or logo, intro, icon) -->
 <div class="row">
-    <div class="col-4">
-        
-        {% if portfolioitem.notLogos %}
+    
+    {% if portfolioitem.notLogos %}
+        <div class="col-4">
+
             {% for image in portfolioitem.notLogos %}
                 {% if forloop.first %}
 
@@ -16,17 +17,22 @@
 
                 {% endif %}
             {% endfor %}
-        {% elif portfolioitem.logo %}
-                    <img src="{{ MEDIA_URL }}{% thumbnail portfolioitem.logo.file 100 0 %}" class="img-fluid">
-        {% else %}
-                    <img src="http://placehold.it/300x200">
-        {% endif %}
-
-    </div>
-
-    <div class="col-4">
+        </div>
+        <div class="col-4">
             {% if portfolioitem.intro %}{{ portfolioitem.intro|safe }}{% endif %}
-    </div>
+        </div>
+    {% elif portfolioitem.logo %}
+        <div class="col-4">
+            <img src="{{ MEDIA_URL }}{% thumbnail portfolioitem.logo.file 100 0 %}" class="img-fluid">
+        </div>
+        <div class="col-4">
+            {% if portfolioitem.intro %}{{ portfolioitem.intro|safe }}{% endif %}
+        </div>
+    {% else %}
+        <div class="col-8">
+            {% if portfolioitem.intro %}{{ portfolioitem.intro|safe }}{% endif %}
+        </div>
+    {% endif %}
 
     <div class="col-4 text-right">
         {% if portfolioitem.icon %}
