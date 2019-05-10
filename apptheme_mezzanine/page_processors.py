@@ -1,6 +1,7 @@
 
 from mezzanine.pages.page_processors import processor_for
 from .models import Portfolio, PortfolioItem, PortfolioItemCategory, Person, HomePage
+from mezzanine_agenda.models import Event
 
 
 @processor_for(Portfolio)
@@ -11,7 +12,8 @@ def portfolio_processor(request, page):
     items = PortfolioItem.objects.published(for_user=request.user).prefetch_related('categories')
     items = items.filter(parent=page)
     categories = PortfolioItemCategory.objects.filter(portfolioitems__in=items).distinct()
-    return {'items': items, 'categories': categories}
+    events = Event.objects.all()
+    return {'items': items, 'categories': categories, 'events': events}
 
 
 @processor_for(PortfolioItem)
