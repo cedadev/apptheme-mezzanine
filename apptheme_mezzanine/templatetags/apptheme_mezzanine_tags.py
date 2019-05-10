@@ -6,7 +6,7 @@ register = template.Library()
 
 @register.filter
 def portfolioitem_in_category(things, category):
-    return things.filter(categories__in=[category,])
+    return things.filter(categories__in=[category,]).order_by("title")
 
 @register.filter
 @stringfilter
