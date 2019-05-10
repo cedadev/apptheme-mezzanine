@@ -273,6 +273,10 @@ body {
   border-radius: 0px;
 }
 
+figcaption {
+  font-style: italic;
+}
+
 /*=======================================
  for tickermepink news ticker
 =========================================*/

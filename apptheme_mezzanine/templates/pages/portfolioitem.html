@@ -11,10 +11,10 @@
 
             {% for image in portfolioitem.notLogos %}
                 {% if forloop.first %}
-
-                    <img src="{{ MEDIA_URL }}{% thumbnail image.file 300 0 %}" class="img-fluid">
-                    
-
+                    <figure class="figure">
+                            <img src="{{ MEDIA_URL }}{% thumbnail image.file 300 0 %}" class="figure-img img-fluid" {% if image.alt_text %}alt="{{image.alt_text}}"{% endif %}>
+                            {% if image.alt_text %}<figcaption class="figure-caption">{{image.alt_text}}</figcaption>{% endif %}
+                    </figure>
                 {% endif %}
             {% endfor %}
         </div>
@@ -23,7 +23,7 @@
         </div>
     {% elif portfolioitem.logo %}
         <div class="col-4">
-            <img src="{{ MEDIA_URL }}{% thumbnail portfolioitem.logo.file 100 0 %}" class="img-fluid">
+            <img src="{{ MEDIA_URL }}{% thumbnail portfolioitem.logo.file 300 0 %}" class="img-fluid" {% if image.alt_text %}alt="{{image.alt_text}}" {% endif %}>
         </div>
         <div class="col-4">
             {% if portfolioitem.intro %}{{ portfolioitem.intro|safe }}{% endif %}
