@@ -166,13 +166,10 @@
             </div>
             {% endif %}
             {% endblock slides %}
-
-            <hr/>
-
-            {% block icon_boxes %}
-            {% if homepage.boxes.all.count > 0 %}
+            
+            {% comment %}
                 <div class="card-deck d-flex justify-content-around">
-                    {% for box in homepage.boxes.all %}
+                    
                         <div class="col-sm-4">
                             <div class="card text-center" style="min-width: 10rem;">
                                     <div class="card-header">
@@ -189,6 +186,29 @@
                                 </div>
                         </div>
                         
+                </div>
+                {% endcomment %}
+
+                {% block icon_boxes %}
+                {% if homepage.boxes.all.count > 0 %}
+                <div class="card-deck" style="margin: 20px;">
+                    {% for box in homepage.boxes.all %}
+                        <div class="card text-center" style="min-width: 10rem;">
+                            <div class="card-header">
+                                    <span class="fa-stack fa-3x">
+                                        <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                                        <i class="fa {% if box.icon %}{{box.icon}}{% else %}fa-info{% endif %} fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </div>
+                            
+                            <div class="card-body">
+                                    <h4 class="card-title">{{ box.title }}</h4>
+                                    <p class="card-text">{{box.content | safe}}</p>
+                            </div>
+                            <div class="card-footer">
+                                    <a href="{{ box.link }}" class="btn btn-primary stretched-link">Learn More</a>
+                            </div>
+                        </div>
                     {% endfor %}
                 </div>
             {% endif %}
