@@ -31,9 +31,10 @@
 
                     </div>
                     <div class="card-body">
-                        <h4 class="card-title"><a class="inherit-color" href="{{ item.get_absolute_url }}">{{ item.title }}</a></h4>
+                        <h4 class="card-title">{{ item.title }}</h4>
                         <p class="card-text">{{item.leader | safe}}</p>
-                        <a href="{{ item.get_absolute_url }}" class="btn btn-default">Learn More</a>
+                    
+                        <a href="{{ item.get_absolute_url }}" class="btn btn-primary stretched-link">Learn More</a>
                     </div>
                 </div>
 
