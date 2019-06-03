@@ -16,20 +16,32 @@
             {% for item in items %}
 
                 <div class="card text-center mt-4" style="min-width: 18rem; max-width: 18rem;">
-                    <div class="card-header">    
-                            {% if item.icon %}
-                                <span class="fa-stack fa-4x">
-                                    <i class="fas fa-circle fa-stack-2x text-primary"></i>
-                                    <i class="fas {{item.icon}} fa-stack-1x fa-inverse"></i>
-                                </span>
-                            {% else %}
-                                <span class="fa-stack fa-4x">
-                                    <i class="fas fa-circle fa-stack-2x text-primary"></i>
-                                    <i class="fas fa-info fa-stack-1x fa-inverse"></i>
-                                </span>
+                    
+                        {# if the portfolioitem has non-logo images, display the first one, else display icon #}
+                        {% if item.portfolioitem.notLogos %}
+                        {% for image in item.portfolioitem.notLogos %}
+                            {% if forloop.first %}
+                                <div class="card-header" style="padding: 0px;">
+                                    <img src="{{ MEDIA_URL }}{% thumbnail image.file 0 200 %}" class="card-img-top" {% if image.alt_text %}alt="{{image.alt_text}}"{% endif %}>
+                                </div>
                             {% endif %}
+                        {% endfor %}
+                        {% else %}
+                            <div class="card-header">    
+                                {% if item.icon %}
+                                    <span class="fa-stack fa-4x">
+                                        <i class="fas fa-circle fa-stack-2x text-primary"></i>
+                                        <i class="fas {{item.icon}} fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                {% else %}
+                                    <span class="fa-stack fa-4x">
+                                        <i class="fas fa-circle fa-stack-2x text-primary"></i>
+                                        <i class="fas fa-info fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                {% endif %}
+                            </div>
+                        {% endif %}
 
-                    </div>
                     <div class="card-body">
                         <h4 class="card-title">{{ item.title }}</h4>
                         <p class="card-text">{{item.leader | safe}}</p>
