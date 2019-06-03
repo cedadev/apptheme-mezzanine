@@ -22,12 +22,12 @@
                         {% for image in item.portfolioitem.notLogos %}
                             {% if forloop.first %}
                                 <div class="card-header" style="padding: 0px;">
-                                    <img src="{{ MEDIA_URL }}{% thumbnail image.file 0 200 %}" class="card-img-top" {% if image.alt_text %}alt="{{image.alt_text}}"{% endif %}>
+                                    <img src="{{ MEDIA_URL }}{% thumbnail image.file 300 0 %}" class="card-img-top" {% if image.alt_text %}alt="{{image.alt_text}}"{% endif %}>
                                 </div>
                             {% endif %}
                         {% endfor %}
                         {% else %}
-                            <div class="card-header">    
+                            <div class="card-header" style="padding: 2rem; min-height: 186px;">    
                                 {% if item.icon %}
                                     <span class="fa-stack fa-4x">
                                         <i class="fas fa-circle fa-stack-2x text-primary"></i>
