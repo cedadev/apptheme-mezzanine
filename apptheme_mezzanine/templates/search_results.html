@@ -15,41 +15,81 @@
 <li class="breadcrumb-item active">{% trans "Search Results" %}</li>
 {% endblock %}
 
-{% block main %}
+{% block mid_wrapper %}
+        <div class="row">
+            <div class="col-md-8">
+                {% block content %}
 
-<p>
-{% if results.paginator.count == 0 %}
-{% blocktrans %}
-No results were found in {{ search_type }} matching your query: {{ query }}
-{% endblocktrans %}
-{% else %}
-{% blocktrans with start=results.start_index end=results.end_index total=results.paginator.count %}
-Showing {{ start }} to {{ end }} of {{ total }} results in {{ search_type }} matching your query: {{ query }}
-{% endblocktrans %}
-{% endif %}
-</p>
+                    {% block main %}
 
-<div id="search-results">
-{% for result in results.object_list %}
-{% with result.get_absolute_url as result_url %}
-    <h5>
-        {{ forloop.counter0|add:results.start_index }})
-        {% if result_url %}
-            <a href="{{ result_url }}">{{ result }}</a>
-        {% else %}
-            {{ result }}
-        {% endif %}
-    </h5>
-    {% if result.description != result|stringformat:"s" %}
-        <p>{{ result.description|truncatewords_html:20|safe }}</p>
-    {% endif %}
-    {% if result_url %}
-        <a href="{{ result_url }}">{% trans "read more" %}</a>
-    {% endif %}
-{% endwith %}
-{% endfor %}
-</div>
+                    <p>
+                    {% if results.paginator.count == 0 %}
+                    {% blocktrans %}
+                    No results were found in {{ search_type }} matching your query: {{ query }}
+                    {% endblocktrans %}
+                    {% else %}
+                    {% blocktrans with start=results.start_index end=results.end_index total=results.paginator.count %}
+                    Showing {{ start }} to {{ end }} of {{ total }} results in {{ search_type }} matching your query: {{ query }}
+                    {% endblocktrans %}
+                    {% endif %}
+                    </p>
+                    
+                    <div id="search-results">
+                    {% for result in results.object_list %}
+                    {% with result.get_absolute_url as result_url %}
+                        <h5>
+                            {{ forloop.counter0|add:results.start_index }})
+                            {% if result_url %}
+                                <a href="{{ result_url }}">{{ result }}</a>
+                            {% else %}
+                                {{ result }}
+                            {% endif %}
+                        </h5>
+                        {% if result.description != result|stringformat:"s" %}
+                            <p>{{ result.description|truncatewords_html:20|safe }}</p>
+                        {% endif %}
+                        {% if result_url %}
+                            <a href="{{ result_url }}">{% trans "read more" %}</a>
+                        {% endif %}
+                    {% endwith %}
+                    {% endfor %}
+                    </div>
+                    
+                    {% pagination_for results %}
+                    
+                    {% endblock main %}
 
-{% pagination_for results %}
+                {% endblock %}
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title">Not found what you're looking for?</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Alternative search tools</h6>
+                        <p class="card-text">This search tool only searches the content of this particular site. You might also like to try the following:</p>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <a class="btn btn-secondary" href="https://catalogue.ceda.ac.uk">CEDA catalogue search</a>
+                                <p class="card-text">Search for datasets in the CEDA Archive.</p>
+                            </li>
+                            <!--  <li class="list-group-item">
+                                <a class="btn btn-secondary" href="https://catalogue.ceda.ac.uk">Some other search 1</a>
+                                <p class="card-text">Search for datasets in the CEDA Archive.</p>
+                            </li> -->
+                            <li class="list-group-item">
+                                <a class="btn btn-secondary" href="https://cse.google.com/cse?q=+&cx=009617667314646343139:y6z_ljohx30">Google custom search</a>
+                                <p class="card-text">Search across all <code>*.ceda.ac.uk</code> sites.</p>
+                            </li>
+                        </ul>
+                    </div>
 
-{% endblock %}
+
+
+                </div>
+
+            </div>
+        </div>
+    {% endblock %}
+
