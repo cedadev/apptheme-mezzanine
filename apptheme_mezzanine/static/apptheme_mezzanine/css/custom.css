@@ -58,6 +58,9 @@
 .recent-posts img {
     margin: 2px;
 }
+.nounderline:hover {
+    text-decoration: none;
+}
 
 /*========================================
             MEZZANINE FORMS
