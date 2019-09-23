@@ -27,7 +27,7 @@
                             {% endif %}
                         {% endfor %}
                         {% else %}
-                            <div class="card-header" style="padding: 2rem; min-height: 186px;">    
+                            <div class="card-header" style="padding: 2rem; min-height: 150px;">    
                                 {% if item.icon %}
                                     <span class="fa-stack fa-3x">
                                         <i class="fas fa-circle fa-stack-2x text-primary"></i>
@@ -46,7 +46,7 @@
                         <h4 class="card-title">{{ item.title }}</h4>
                         <p class="card-text">{{item.leader | safe}}</p>
                     
-                        <a href="{{ item.get_absolute_url }}" class="btn btn-primary stretched-link">Learn More</a>
+                        <a href="{{ item.get_absolute_url }}" class="stretched-link"></a>
                     </div>
                 </div>
 
