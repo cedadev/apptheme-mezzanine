@@ -2,7 +2,7 @@
 
 {% load pages_tags mezzanine_tags i18n staticfiles cookielaw_tags %}{# ceda_utils #}
 
-{% block head_title %}{% if settings.SITE_TITLE %} | {{ settings.SITE_TITLE }}{% endif %}{% endblock %}
+{% block head_title %}{% if settings.SITE_TITLE %}{{ settings.SITE_TITLE }}{% endif %} | {{ page.title }} {% endblock %}
 
 {% block blog_feeds %}
 {% ifinstalled mezzanine.blog %}
