@@ -114,7 +114,7 @@
 
                                             {% block blog_post_list_post_links %}
 
-                                                <a href="{{ blog_post.get_absolute_url }}" class="stretched-link"></a>
+                                                <a href="{{ blog_post.get_absolute_url }}">{% trans "Read more" %}</a>
 
                                                 {% keywords_for blog_post as tags %}
                                                 {% if tags %}
