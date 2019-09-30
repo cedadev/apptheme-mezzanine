@@ -11,6 +11,9 @@
 {% endifinstalled %}
 {% endblock %}
 
+{% block head_js %}
+{{ block.super }}
+{% endblock %}
 
 {% block stylesheets_pre_extra %}
     {# normally css/mezzanine.css" goes here, but we've re-implemented #}
