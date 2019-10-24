@@ -30,3 +30,8 @@ def dateage(value):
     '''return difference of a datetime versus now, in days'''
     deltadays = datetime.now() - value
     return deltadays.days
+
+@register.filter
+def order_by(queryset, args):
+    args = [x.strip() for x in args.split(',')]
+    return queryset.order_by(*args)
