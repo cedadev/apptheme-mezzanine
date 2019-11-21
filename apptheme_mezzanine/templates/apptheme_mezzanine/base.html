@@ -19,20 +19,6 @@
 
 {% block site_name %}{{ settings.SITE_TITLE }}{% endblock site_name %}
 
-{% block navigation %}
-    <!-- page menu -->
-    {% block navbar_dropdown %}
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-            {% page_menu "pages/menus/dropdown.html" %}
-        </div> 
-    {% endblock navbar_dropdown %}
-    <!-- end of page menu -->
-    <!-- search form -->
-    {% search_form %}
-    {# block userstatus #}
-        {# currently disabled #}   
-    {# endblock userstatus #}
-{% endblock navigation %}
 
 {% block content_main %}
 
