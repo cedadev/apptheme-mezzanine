@@ -35,3 +35,10 @@ def dateage(value):
 def order_by(queryset, args):
     args = [x.strip() for x in args.split(',')]
     return queryset.order_by(*args)
+
+from mezzanine.core.models import CONTENT_STATUS_PUBLISHED
+@register.filter
+def published(queryset):
+    '''explicit filter by published status (for mezzanine-agenda Events)'''
+    return queryset.filter(status=CONTENT_STATUS_PUBLISHED)
+
