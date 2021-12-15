@@ -58,7 +58,7 @@ class PortfolioItemPerson(Orderable):
     '''
     A Person associated with a PortfolioItem
     '''
-    portfolioitem = models.ForeignKey(PortfolioItem, related_name="persons")
+    portfolioitem = models.ForeignKey(PortfolioItem, related_name="persons", on_delete=models.CASCADE)
     person = models.ForeignKey(
         "Person",
         on_delete=models.CASCADE,
@@ -72,7 +72,7 @@ class PortfolioItemImage(Orderable):
     '''
     An image for a PortfolioItem
     '''
-    portfolioitem = models.ForeignKey(PortfolioItem, related_name="images")
+    portfolioitem = models.ForeignKey(PortfolioItem, related_name="images", on_delete=models.CASCADE)
     file = FileField(_("File"), max_length=200, format="Image",
         upload_to=upload_to("theme.PortfolioItemImage.file", "portfolio items"))
     alt_text = models.CharField(max_length=200, blank=True)
@@ -144,7 +144,7 @@ class IconBox(Orderable):
     '''
     An icon box on a HomePage
     '''
-    homepage = models.ForeignKey(HomePage, related_name="boxes")
+    homepage = models.ForeignKey(HomePage, related_name="boxes", on_delete=models.CASCADE)
     icon = models.CharField(max_length=50,
         help_text="Enter the name of a font awesome icon, i.e. "
                   "fa-eye. A list is available here "
@@ -158,7 +158,7 @@ class Slide(Orderable):
     '''
     A slide in a slider connected to a HomePage
     '''
-    homepage = models.ForeignKey(HomePage, related_name="slides")
+    homepage = models.ForeignKey(HomePage, related_name="slides", on_delete=models.CASCADE)
     heading = models.CharField(max_length=100, blank=True)
     subheading = models.CharField(max_length=100, blank=True)
     credit = models.CharField(max_length=100, blank=True,
